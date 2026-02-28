@@ -1,15 +1,12 @@
 from htmlnode import HTMLNode
 
-class LeafNode(HTMLNode):
 
+class LeafNode(HTMLNode):
     def __init__(self, tag, value, props=None):
-        
+
         assert value is not None, "LeafNode value can't be None"
-        super().__init__(tag=tag, 
-                         value=value, 
-                         children=None, 
-                         props=props)
-    
+        super().__init__(tag=tag, value=value, children=None, props=props)
+
     def to_html(self):
         if self.value is None:
             raise ValueError("leaf nodes require a value")
@@ -42,14 +39,12 @@ class LeafNode(HTMLNode):
         return ret
 
 
-if __name__ == '__main__':
-    print('Inside leafnode.py')
-    leaf = LeafNode("a", "Click me!", 
-                 {"href": "https://www.google.com"})
+if __name__ == "__main__":
+    print("Inside leafnode.py")
+    leaf = LeafNode("a", "Click me!", {"href": "https://www.google.com"})
     print(leaf.to_html())
 
     print(leaf)
-
 
     leaf_2 = LeafNode("p", "This is a paragraph")
     print(leaf_2.to_html())

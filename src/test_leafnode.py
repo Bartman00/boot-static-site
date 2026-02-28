@@ -9,7 +9,7 @@ class TestTextNode(unittest.TestCase):
 
     def test_eq(self):
 
-        self.assertEqual(self.node.tag, "<p>")
+        self.assertEqual(self.node.tag, "p")
         self.assertEqual(self.node.value, "a value")
         self.assertEqual(self.node.props, {'k1':'v1', 'k2':'v2'})
 

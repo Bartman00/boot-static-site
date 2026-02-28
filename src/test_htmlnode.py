@@ -5,14 +5,16 @@ from htmlnode import HTMLNode
 
 class TestTextNode(unittest.TestCase):
     def setUp(self) -> None:
-        self.node = HTMLNode("<p>", "a value", ['child1', 'child2'],
-                             {'k1':'v1', 'k2':'v2'})
+        self.node = HTMLNode("<p>", "a value", 
+                                [HTMLNode(value='child1'), 
+                                    HTMLNode(value='child2')],
+                                {'k1':'v1', 'k2':'v2'})
 
     def test_eq(self):
 
-        self.assertEqual(self.node.tag, "<p>")
+        self.assertEqual(self.node.tag, "p")
         self.assertEqual(self.node.value, "a value")
-        self.assertEqual(self.node.children, ['child1', 'child2'])
+        self.assertEqual(self.node.children[0].value, "child1")
         self.assertEqual(self.node.props, {'k1':'v1', 'k2':'v2'})
 
     def test_assert_bad_inputs(self):

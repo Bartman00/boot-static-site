@@ -21,15 +21,24 @@ class HTMLNode:
             assert isinstance(children, list), (
                 "HTMLNode children needs to be None or a list"
             )
-            assert all(isinstance(child, str) for child in children), (
-                "HTMLNode children all need to be strings"
+            assert all(isinstance(child, HTMLNode) for child in children), (
+                "HTMLNode children all need to be HTMLNodes"
             )
         assert props is None or isinstance(props, dict), \
             "HTMLNode props needs to be None or a dictionary"
         assert value is not None or children is not None, \
             "HTMLNode needs either value or children to not be none"
 
-        self.tag = tag
+        # Remove "<" and ">" marks if included
+        if tag is None or tag[0] != "<":
+            self.tag = tag
+        elif tag[0] == "<":
+            if tag[-1] == ">":
+                self.tag = tag[1:-1]
+            else:
+                raise ValueError("If tag starts with '<', it needs to end with '>'")
+        
+        # Other values are copied in
         self.value = value
         self.children = children
         self.props = props
@@ -58,7 +67,9 @@ class HTMLNode:
             ret += "\nchildren = None"
         else:
             ret += "\nchildren:\n"
-            ret += "\n".join(self.children)
+            for i, child in enumerate(self.children):
+                ret += f"------- Child {i} -------"
+                ret += f"\n {child}\n"
 
         if self.props is None:
             ret += "\nprops = None"
