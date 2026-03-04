@@ -10,6 +10,13 @@ class TextType(Enum):
     LINK = "link"
     IMAGE = "image"
 
+    @classmethod
+    def is_valid(cls, value:str) -> bool:
+        try:
+            cls(value)
+            return True
+        except ValueError:
+            return False
 
 class TextNode:
     def __init__(self, text, text_type, url=None):
@@ -44,7 +51,7 @@ class TextNode:
         """
         Simple print with value from the enum above
         """
-        return f"TextNode({self.text}, {self.text_type.value}, {self.url})"
+        return f'TextNode("{self.text}", {self.text_type.value}, {self.url})'
 
 
 def text_node_to_html_node(text_node: TextNode):

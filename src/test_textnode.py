@@ -74,7 +74,7 @@ class TestTextNode(unittest.TestCase):
         
     def test_image_link_conversion(self):
         img_node = TextNode("This is image text", TextType.IMAGE, url='www.image.com')
-        image_html = text_node_to_html_node(img_node) 
+        image_html = text_node_to_html_node(img_node)
         self.assertEqual(image_html.value, "") 
         self.assertEqual(image_html.tag, 'img')
         self.assertEqual(image_html.props['src'], 'www.image.com')
