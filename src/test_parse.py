@@ -169,3 +169,35 @@ class TestTextNode(unittest.TestCase):
         result = parse.split_nodes_delimiter(initial_result, "`", TextType.CODE)
 
         self.assertEqual(result, expected)
+        
+    def test_extract_markdown_images(self):
+
+        text = "This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
+
+        result = parse.extract_markdown_images(text)
+
+        expected = [("rick roll", "https://i.imgur.com/aKaOqIh.gif"), ("obi wan", "https://i.imgur.com/fJRm4Vk.jpeg")]
+
+        self.assertEqual(result, expected)
+        
+        empty_text = "This text does not have any links"
+        empty_expect = []
+
+        result = parse.extract_markdown_images(empty_text)
+        self.assertEqual(result, empty_expect)
+
+        matches = parse.extract_markdown_images("This is text with an ![image](https://i.imgur.com/zjjcJKZ.png)")
+        self.assertListEqual([("image", "https://i.imgur.com/zjjcJKZ.png")], matches)
+
+        almost = "This is text with [almost](all of the parts) of an image, but it [should](be empty)"
+        result = parse.extract_markdown_images(almost)
+        self.assertEqual(result, empty_expect)
+        
+    def test_extract_markdown_links(self):
+
+        text = "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)"
+
+        expected = [("to boot dev", "https://www.boot.dev"), ("to youtube", "https://www.youtube.com/@bootdotdev")]
+
+        result = parse.extract_markdown_links(text)
+        self.assertEqual(result, expected)
