@@ -78,7 +78,7 @@ def extract_markdown_links(text):
     big_list = re.findall(regex, text)
     
     for link in big_list:
-        print(f"{link=}")
+        # print(f"{link=}")
         anchor = re.findall(r"\[.*?\]", link)
         anchor = anchor[0][1:-1]
 
