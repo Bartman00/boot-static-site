@@ -17,7 +17,6 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
             )
     return new_nodes
 
-
 def split_string_delimiter(split_me, delimiter, text_type):
     # Handles a single string
     # print(f'{split_me=}')
@@ -49,6 +48,37 @@ def split_string_delimiter(split_me, delimiter, text_type):
         use_next = not use_next
 
     return ret
+
+def split_nodes_image(old_nodes):
+    # splits nodes by images
+    new_nodes = []
+    
+    for old_node in old_nodes:
+        old_text = old_node.text
+        # print(f"{old_text=}")
+        images = extract_markdown_images(old_text)
+        # print(f"len(images)={len(images)}")
+
+        if len(images) < 1:
+            new_nodes.append(TextNode(old_text, TextType.TEXT))
+        else:
+            unsplit_text = old_text
+            for image in images:
+                image_alt, image_link = image[0], image[1]
+                sections = unsplit_text.split(f"![{image_alt}]({image_link})", 1)
+                unsplit_text = sections[1] # Can include the next image
+                
+                if len(sections[0]) > 0:
+                    new_nodes.append(TextNode(sections[0], TextType.TEXT))
+                new_nodes.append(TextNode(image_alt, TextType.IMAGE, image_link))
+            
+            if len(unsplit_text) > 0:
+                new_nodes.append(TextNode(unsplit_text, TextType.TEXT))
+
+
+    return new_nodes
+
+
     
 def extract_markdown_images(text):
     # Takes raw markdown text and returns a list of tuples
@@ -69,6 +99,36 @@ def extract_markdown_images(text):
         ret.append((alt_text, link))
     return ret
 
+def split_nodes_link(old_nodes):
+    # splits nodes by links
+    # print(f'{old_nodes=}')
+    new_nodes = []
+    
+    for old_node in old_nodes:
+        old_text = old_node.text
+        # print(f"{old_text=}")
+        links = extract_markdown_links(old_text)
+        # print(f"len(images)={len(links)}")
+
+        if len(links) < 1:
+            new_nodes.append(TextNode(old_text, TextType.TEXT))
+        else:
+            unsplit_text = old_text
+            for link in links:
+                link_text, link_anchor = link[0], link[1]
+                sections = unsplit_text.split(f"[{link_text}]({link_anchor})", 1)
+                unsplit_text = sections[1] # Can include the next image
+                
+                if len(sections[0]) > 0:
+                    new_nodes.append(TextNode(sections[0], TextType.TEXT))
+                new_nodes.append(TextNode(link_text, TextType.LINK, link_anchor))
+            
+            if len(unsplit_text) > 0:
+                new_nodes.append(TextNode(unsplit_text, TextType.TEXT))
+
+
+    return new_nodes
+    
 def extract_markdown_links(text):
     # Extracts links. Returns tuples of anchor text and URLs
     ret = []
@@ -150,4 +210,41 @@ if __name__ == "__main__":
         print(link)
         
         
+    print("\n----SPLIT IMAGES----------------")
+    node = TextNode(
+        "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png) and another ![second image](https://i.imgur.com/3elNhQu.png)",
+        TextType.TEXT
+    ) 
+    print(node)
+    new_nodes = split_nodes_image([node])
+    print("\nImage nodes:")
+    for new_node in new_nodes:
+        print(new_node)
+    
+    print("\n----SPLIT LINKS----------------")
+    node = TextNode(
+        "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)",
+        TextType.TEXT
+    ) 
+    print(node)
+    new_nodes = split_nodes_link([node])
+    print("\nLink nodes:")
+    for new_node in new_nodes:
+        print(new_node)
+    
+    print("\n--------COMBINED IMAGES AND LINKS--------")
+    combined = TextNode("[url text](www.google.com) has both links and ![images](www.image.com)", TextType.TEXT)
+    processed_images = split_nodes_link([combined])
+
         
+
+    print("---------")
+    processed_links = split_nodes_image(processed_images)
+    for new_node in processed_links:
+        print(new_node)
+    print('----- LINK ONLY-----') 
+    link_only = TextNode("[url text](www.google.com)", TextType.TEXT)
+    nodes = split_nodes_link([link_only])
+
+    for node in nodes:
+        print(node)

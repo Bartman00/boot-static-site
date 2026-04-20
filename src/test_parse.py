@@ -201,3 +201,109 @@ class TestTextNode(unittest.TestCase):
 
         result = parse.extract_markdown_links(text)
         self.assertEqual(result, expected)
+        
+        images_only = "This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
+
+        empty_result = []
+
+        result = parse.extract_markdown_links(images_only)
+        self.assertEqual(result, empty_result)
+        
+
+    def test_split_images(self):
+        node = TextNode(
+            "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png) and another ![second image](https://i.imgur.com/3elNhQu.png)",
+            TextType.TEXT,
+        )
+        new_nodes = parse.split_nodes_image([node])
+        self.assertListEqual(
+            [
+                TextNode("This is text with an ", TextType.TEXT),
+                TextNode("image", TextType.IMAGE, "https://i.imgur.com/zjjcJKZ.png"),
+                TextNode(" and another ", TextType.TEXT),
+                TextNode(
+                    "second image", TextType.IMAGE, "https://i.imgur.com/3elNhQu.png"
+                ),
+            ],
+            new_nodes,
+        )
+        
+        no_image = TextNode("This is text without images", TextType.TEXT)
+
+        no_image_nodes = parse.split_nodes_image([no_image])
+        self.assertEqual(
+                [
+                    TextNode("This is text without images", TextType.TEXT)
+                ],
+                no_image_nodes
+            )
+            
+        start_image = TextNode(
+                "![another image](https://fakewebsite.com) other text", TextType.TEXT,
+                )
+        start_image_nodes = parse.split_nodes_image([start_image])
+        self.assertEqual([
+            TextNode("another image", TextType.IMAGE, "https://fakewebsite.com"),
+            TextNode(" other text", TextType.TEXT)
+            ], start_image_nodes
+         )
+         
+        has_a_link = TextNode("[url text](https://www.boot.dev) doesn't actually have images", TextType.TEXT)
+        link_nodes = parse.split_nodes_image([has_a_link])
+        self.assertEqual([has_a_link], link_nodes)
+        
+        # Empty list should return an empty list
+        self.assertEqual([], parse.split_nodes_image([]))
+        
+
+        # Start with multiple
+        multi = [TextNode("This is text with an ![image](https://i.imgur.com/zjjcJKZ.png) and another ![second image](https://i.imgur.com/3elNhQu.png)", TextType.TEXT),
+                 TextNode("This also has ![images](fakelink.com) in it", TextType.TEXT)]
+
+        expected = [TextNode("This is text with an ", TextType.TEXT),
+                    TextNode("image", TextType.IMAGE, "https://i.imgur.com/zjjcJKZ.png"),
+                    TextNode(" and another ", TextType.TEXT),
+                    TextNode("second image", TextType.IMAGE, "https://i.imgur.com/3elNhQu.png"), 
+                    TextNode("This also has ", TextType.TEXT),
+                    TextNode("images", TextType.IMAGE, "fakelink.com"),
+                    TextNode(" in it", TextType.TEXT)]
+        self.assertEqual(parse.split_nodes_image(multi), expected)
+
+
+        
+    def test_split_links(self):
+
+        has_a_link = TextNode("[url text](https://www.boot.dev) doesn't actually have images", TextType.TEXT)
+        link_nodes = parse.split_nodes_link([has_a_link])
+        self.assertEqual([
+            TextNode("url text", TextType.LINK, "https://www.boot.dev"),
+            TextNode(" doesn't actually have images", TextType.TEXT)
+            ], link_nodes)
+
+        combined = TextNode("[url text](www.google.com) has both links and ![images](www.image.com)", TextType.TEXT)
+        combined_nodes = parse.split_nodes_link([combined])
+        
+
+        expected = [TextNode("url text", TextType.LINK, "www.google.com"),
+                    TextNode(" has both links and ![images](www.image.com)", TextType.TEXT)
+                    ]
+        self.assertEqual(combined_nodes, expected)
+        
+        # Empty list should return an empty list
+        self.assertEqual([], parse.split_nodes_link([]))
+        
+
+        # Start with multiple
+        multi = [TextNode("This is text with an [link](https://i.imgur.com/zjjcJKZ.png) and another [second link](https://i.imgur.com/3elNhQu.png)", TextType.TEXT),
+                 TextNode("This also has [links](fakelink.com) in it", TextType.TEXT)]
+
+        expected = [TextNode("This is text with an ", TextType.TEXT),
+                    TextNode("link", TextType.LINK, "https://i.imgur.com/zjjcJKZ.png"),
+                    TextNode(" and another ", TextType.TEXT),
+                    TextNode("second link", TextType.LINK, "https://i.imgur.com/3elNhQu.png"), 
+                    TextNode("This also has ", TextType.TEXT),
+                    TextNode("links", TextType.LINK, "fakelink.com"),
+                    TextNode(" in it", TextType.TEXT)]
+        self.assertEqual(parse.split_nodes_link(multi), expected)
+        
+        
