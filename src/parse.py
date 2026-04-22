@@ -1,6 +1,18 @@
 from textnode import TextNode, TextType
 import re
 
+def combined_split(text):
+    # Splits using all of the functions below
+
+    if len(text) == 0:
+        return []
+    nodes = [TextNode(text, TextType.TEXT)]
+    nodes = split_nodes_delimiter(nodes, "**", TextType.BOLD)
+    nodes = split_nodes_delimiter(nodes, "_", TextType.ITALIC)
+    nodes = split_nodes_delimiter(nodes, "`", TextType.CODE)
+    nodes = split_nodes_image(nodes)
+    nodes = split_nodes_link(nodes)
+    return nodes
 
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
 
@@ -24,28 +36,32 @@ def split_string_delimiter(split_me, delimiter, text_type):
         raise ValueError(f"{split_me} does not have balanced delimiters")
     if not text_type.is_valid(text_type):
         raise ValueError(f"{text_type} is invalid")
+    if delimiter * 2 in split_me:
+        raise ValueError("Cannot have repeating delimiters")
 
     ret = []
 
     if len(split_me) < 1:
         return TextNode("", text_type=TextType.TEXT)
-
     # Alternates between text and special text
     # This only starts with special if the first
     # character is the delimiter
-    use_next = split_me[0] == delimiter
+    use_next = split_me[0:len(delimiter)] == delimiter
     split_up = split_me.split(delimiter)
+    # print(f"{use_next=}")
 
     for isplit in split_up:
+        # print(f"{isplit=}")
         if len(isplit) < 1:
             continue
         if use_next:
             # This block is the special type specified
             ret.append(TextNode(isplit, text_type=text_type))
+            use_next = False
         else:
             # Normal text
             ret.append(TextNode(isplit, text_type=TextType.TEXT))
-        use_next = not use_next
+            use_next = True
 
     return ret
 
@@ -54,6 +70,12 @@ def split_nodes_image(old_nodes):
     new_nodes = []
     
     for old_node in old_nodes:
+        
+        if old_node.text_type != TextType.TEXT:
+            # Just add. Don't do anything else
+            new_nodes.append(old_node)
+            continue
+
         old_text = old_node.text
         # print(f"{old_text=}")
         images = extract_markdown_images(old_text)
@@ -105,6 +127,12 @@ def split_nodes_link(old_nodes):
     new_nodes = []
     
     for old_node in old_nodes:
+        
+        if old_node.text_type != TextType.TEXT:
+            # Just add. Don't do anything else
+            new_nodes.append(old_node)
+            continue
+        
         old_text = old_node.text
         # print(f"{old_text=}")
         links = extract_markdown_links(old_text)
@@ -156,6 +184,15 @@ if __name__ == "__main__":
     node = TextNode("This is text with a `code block` word", TextType.TEXT)
     new_nodes = split_nodes_delimiter([node], "`", TextType.CODE)
     print(new_nodes)
+    
+    print("\nBold only test")
+    text = "**bold one** **bold two**"
+    node = TextNode(text, TextType.TEXT)
+    new_nodes = split_nodes_delimiter([node], "**", TextType.BOLD)
+    for node in new_nodes:
+        print(node)
+
+"""
     # Be sure to test:
     # 1. Starts with a delimiter
     # 2. Ends with a delimiter
@@ -248,3 +285,12 @@ if __name__ == "__main__":
 
     for node in nodes:
         print(node)
+        
+    print("\n-------------COMBINE EVERYTHING--------------")
+    text = "This is **text** with an _italic_ word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
+
+    nodes = combined_split(text)
+    
+    for node in nodes:
+        print(node)
+"""

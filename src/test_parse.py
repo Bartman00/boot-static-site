@@ -79,6 +79,10 @@ class TestTextNode(unittest.TestCase):
                 TextNode(" word", TextType.TEXT),
             ],
         )
+        
+        double_bold = TextNode("**bold one****bold two", TextType.TEXT)
+        with self.assertRaises(ValueError):
+            print(parse.split_nodes_delimiter([double_bold], "**", TextType.BOLD))
 
     def test_nodes_start_delimiter(self):
 
@@ -306,4 +310,44 @@ class TestTextNode(unittest.TestCase):
                     TextNode(" in it", TextType.TEXT)]
         self.assertEqual(parse.split_nodes_link(multi), expected)
         
+    def test_combined_split(self):
+        # Combined
+        self.assertEqual([], parse.combined_split(""))
         
+        text = "This is **text** with an _italic_ word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
+        
+        expected = [
+            TextNode("This is ", TextType.TEXT),
+            TextNode("text", TextType.BOLD),
+            TextNode(" with an ", TextType.TEXT),
+            TextNode("italic", TextType.ITALIC),
+            TextNode(" word and a ", TextType.TEXT),
+            TextNode("code block", TextType.CODE),
+            TextNode(" and an ", TextType.TEXT),
+            TextNode("obi wan image", TextType.IMAGE, "https://i.imgur.com/fJRm4Vk.jpeg"),
+            TextNode(" and a ", TextType.TEXT),
+            TextNode("link", TextType.LINK, "https://boot.dev"),
+        ]
+        
+        result = parse.combined_split(text)
+
+        self.assertEqual(result, expected)
+        
+        text = "**bold only**"
+        expected = [TextNode("bold only", TextType.BOLD)]
+        result = parse.combined_split(text)
+        # print(f"{result=}")
+        self.assertEqual(result, expected)
+        
+        text = "**bold one** **bold two**"
+        expected = [TextNode("bold one", TextType.BOLD),
+                    TextNode(" ", TextType.TEXT),
+                    TextNode("bold two", TextType.BOLD)]
+        result = parse.combined_split(text)
+        self.assertEqual(result, expected)
+        
+        text = "![img1](website1)![img2](website2)"
+        expected = [TextNode("img1", TextType.IMAGE, "website1"),
+                    TextNode("img2", TextType.IMAGE, "website2")]
+        result = parse.combined_split(text)
+        self.assertEqual(result, expected)
