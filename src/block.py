@@ -39,7 +39,8 @@ def block_to_block_type(block):
     # print("heading regex:")
     # print(re.findall(r"#{1,6}\s.*", lines[0]))
     # print(f"{lines[0]=}")
-    if len(re.findall(r"^#{1,6}\s.*", lines[0])) > 0:
+    if (len(re.findall(r"^#{1,6}\s.*", lines[0])) > 0 and 
+        len(lines) == 1):
         return BlockType.HEADING
     
     # Code starts with ``` then a new line and ends with ```

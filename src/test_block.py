@@ -107,6 +107,15 @@ but every line needs >
         expected = [BlockType.PARAGRAPH]
         self.assertEqual(result, expected)
         
+        md = """
+# Heading
+this should count as a paragraph block because headings
+"""
+        
+        result = [block_to_block_type(block) for block in markdown_to_blocks(md)]
+        expected = [BlockType.PARAGRAPH]
+        self.assertEqual(result, expected)
+        
         
     def test_block_type_error(self):
 
@@ -173,14 +182,6 @@ but every line needs >
                     ]
         self.assertEqual(result, expected)
         
-        md = """
-# Heading
-I think everything is a heading if the first line is.
-"""
-        
-        result = [block_to_block_type(block) for block in markdown_to_blocks(md)]
-        expected = [BlockType.HEADING]
-        self.assertEqual(result, expected)
         
     def test_code_block(self):
         
