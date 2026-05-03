@@ -16,6 +16,39 @@ class TestTextNode(unittest.TestCase):
         self.assertEqual(self.node.value, "a value")
         self.assertEqual(self.node.children[0].value, "child1")
         self.assertEqual(self.node.props, {'k1':'v1', 'k2':'v2'})
+        
+    def test_eq_dunder(self):
+        
+        basic = HTMLNode("<p>", "a value")
+        self.assertEqual(basic, basic)
+        
+        copy = HTMLNode("<p>", "a value", 
+                        [HTMLNode(value='child1'), 
+                            HTMLNode(value='child2')],
+                        {'k1':'v1', 'k2':'v2'})
+        self.assertEqual(self.node, copy)
+        
+        another_copy = HTMLNode("p", "a value", 
+                        [HTMLNode(value='child1'), 
+                            HTMLNode(value='child2')],
+                        {'k1':'v1', 'k2':'v2'})
+                        
+        self.assertEqual(self.node, another_copy)
+        
+        # Changed the tag
+        bad_copy = HTMLNode("d", "a value", 
+                        [HTMLNode(value='child1'), 
+                            HTMLNode(value='child2')],
+                        {'k1':'v1', 'k2':'v2'})
+        self.assertNotEqual(self.node, bad_copy)
+        
+
+        # Changed the keys
+        bad_copy_2 = HTMLNode("p", "a value", 
+                        [HTMLNode(value='child1'), 
+                            HTMLNode(value='child2')],
+                        {'key_1':'v1', 'key_2':'v2'})
+        self.assertNotEqual(self.node, bad_copy_2)
 
     def test_assert_bad_inputs(self):
 

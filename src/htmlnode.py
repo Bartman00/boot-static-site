@@ -15,7 +15,7 @@ class HTMLNode:
             "HTMLNode tag needs to be None or a string"
         )
         assert value is None or isinstance(value, str), (
-            "HTMLNode tag needs to be None or a string"
+            "HTMLNode value needs to be None or a string"
         )
         if children is not None:
             assert isinstance(children, list), (
@@ -78,5 +78,39 @@ class HTMLNode:
             ret += "\n".join(self.props)
 
         return ret
+
+    def __eq__(self, other):
+        
+        if self.tag != other.tag:
+            return False
+
+        if self.value != other.value:
+            return False
+        
+        if type(self.children) is not type(other.children):
+            return False
+
+        if type(self.children) is list:
+            if len(self.children) != len(other.children):
+                return False
+            
+            for child, other_child in zip(self.children, other.children):
+                if child != other_child:
+                    return False
+
+        if type(self.props) is not type(other.props):
+            return False
+            
+        if type(self.props) is dict:
+            
+            # print("Checking dictionary")
+            for k, v in self.props.items():
+                # print(f"{k=} = {v=}")
+                # print(f"other[{k}].get = {other.props.get(k)}")
+                if other.props.get(k) != v:
+                    return False
+
+        return True
+
 
 
