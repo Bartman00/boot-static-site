@@ -12,6 +12,17 @@ class TestTextNode(unittest.TestCase):
         self.assertEqual(self.node.tag, "p")
         self.assertEqual(self.node.value, "a value")
         self.assertEqual(self.node.props, {'k1':'v1', 'k2':'v2'})
+        
+    def test_eq_dunder(self):
+        self.assertEqual(self.node, self.node)
+        
+        node_2 = LeafNode("<p>", "a value", 
+                          props = {'k1':'v1', 'k2':'v2'})
+        self.assertEqual(self.node, node_2)
+        
+        node_2.props['k3'] = 'v3'
+        
+        self.assertNotEqual(self.node, node_2)
 
     def test_assert_bad_inputs(self):
 
@@ -35,7 +46,7 @@ class TestTextNode(unittest.TestCase):
 
     def test_props_to_html(self):
 
-        self.assertEqual(self.node.props_to_html(), ' k1="v1" k2="v2"')
+        self.assertEqual(self.node.props_to_html(), 'k1="v1" k2="v2"')
         node2 = LeafNode("a", "b", props={})
         self.assertEqual(node2.props_to_html(), "")
 

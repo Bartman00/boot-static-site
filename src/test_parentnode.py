@@ -16,6 +16,10 @@ class TestTextNode(unittest.TestCase):
             ],
         )
 
+    def test_equal(self):
+        self.assertEqual(self.base_parent, self.base_parent)
+
+
     def test_basic(self):
 
         self.assertEqual(self.base_parent.tag, "p")

@@ -16,7 +16,7 @@ class LeafNode(HTMLNode):
 
         ret = f"<{self.tag}"
         if self.props is not None:
-            ret += self.props_to_html()
+            ret += " " + self.props_to_html()
         ret += ">"
 
         ret += self.value
@@ -48,3 +48,5 @@ if __name__ == "__main__":
 
     leaf_2 = LeafNode("p", "This is a paragraph")
     print(leaf_2.to_html())
+    
+    print(f"Is LeafNode an HTMLNode?: {isinstance(leaf, HTMLNode)}")

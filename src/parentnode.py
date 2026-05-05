@@ -3,7 +3,7 @@ from leafnode import LeafNode
 
 
 class ParentNode(HTMLNode):
-    def __init__(self, tag, children: list[HTMLNode], props=None):
+    def __init__(self, tag, children: list[LeafNode], props=None):
         assert tag is not None, "ParentNodede needs to have a tag"
         assert children is not None, "ParentNode needs to have children"
         assert len(children) > 0, "ParentNode needs at least one child"
@@ -17,7 +17,7 @@ class ParentNode(HTMLNode):
 
         ret = f"<{self.tag}"
         if self.props is not None:
-            ret += self.props_to_html()
+            ret += " " + self.props_to_html()
         ret += ">"
 
         for child in self.children:

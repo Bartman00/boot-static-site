@@ -57,7 +57,7 @@ class HTMLNode:
         for k, v in self.props.items():
             ret += f' {k}="{v}"'
         
-        return ret
+        return ret.strip()
 
     def __repr__(self):
         ret = f"tag = {self.tag}"
@@ -70,11 +70,12 @@ class HTMLNode:
             for i, child in enumerate(self.children):
                 ret += f"------- Child {i} -------"
                 ret += f"\n {child}\n"
+            ret += "------- End Children -------"
 
         if self.props is None:
-            ret += "\nprops = None"
+            ret += "\nparent props = None"
         else:
-            ret += "\nprops:\n"
+            ret += "\nparent props:\n"
             ret += "\n".join(self.props)
 
         return ret
@@ -108,6 +109,10 @@ class HTMLNode:
                 # print(f"{k=} = {v=}")
                 # print(f"other[{k}].get = {other.props.get(k)}")
                 if other.props.get(k) != v:
+                    return False
+                    
+            for k, v in other.props.items():
+                if self.props.get(k) != v:
                     return False
 
         return True

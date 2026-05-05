@@ -72,7 +72,7 @@ class TestTextNode(unittest.TestCase):
 
     def test_props_to_html(self):
 
-        self.assertEqual(self.node.props_to_html(), ' k1="v1" k2="v2"')
+        self.assertEqual(self.node.props_to_html(), 'k1="v1" k2="v2"')
         node2 = HTMLNode("a", "b", props={})
         self.assertEqual(node2.props_to_html(), "")
 
