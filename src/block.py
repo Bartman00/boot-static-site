@@ -26,11 +26,17 @@ def block_to_block_type(block):
         
     if len(lines) < 1:
         raise ValueError("Block needs at least one line")
+        
+    
+    lines = [line.strip() for line in lines]
+    lines = [line for line in lines if len(line) > 0]
+        
 
     # Check the first character to see if it fits any of these
     # and avoid longer test
     start_characters = "#`>-123456789"
     # print(block[0][0])
+    # print(f"lines:\n{lines}")
     if lines[0][0] not in start_characters:
         # print("missing first char")
         return BlockType.PARAGRAPH
