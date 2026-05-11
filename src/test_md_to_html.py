@@ -169,7 +169,7 @@ This is another paragraph with _italic_ text and `code` here
         result = markdown_to_html_node(block).to_html()
         expected = "<div><ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul><ul><li>Item 4</li><li>Item 5</li><li>Item 6</li></ul></div>"
         self.assertEqual(result, expected)
-    
+
     def test_create_mixed_lists(self):
         block = """
 - Item 1
@@ -183,7 +183,7 @@ This is another paragraph with _italic_ text and `code` here
         result = markdown_to_html_node(block).to_html()
         expected = "<div><ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul><ol><li>Numbered 4</li><li>Numbered 5</li><li>Numbered 6</li></ol></div>"
         self.assertEqual(result, expected)
-        
+
     def test_headings(self):
 
         md = """###### Heading 1
@@ -193,27 +193,27 @@ This is another paragraph with _italic_ text and `code` here
         result = markdown_to_html_node(md).to_html()
         expected = "<div><h6>Heading 1</h6><h2>Heading 2 <b>bolded</b></h2></div>"
         self.assertEqual(result, expected)
-        
+
     def test_not_headings(self):
         # Misc tests for almost yeadings that should not be headings
         md = """####### Too many pounds"""
         result = markdown_to_html_node(md).to_html()
         expected = "<div><p>####### Too many pounds</p></div>"
         self.assertEqual(result, expected)
-        
+
         md = """# Multiline
 ## Headings don't count"""
         result = markdown_to_html_node(md).to_html()
         expected = "<div><p># Multiline ## Headings don't count</p></div>"
         self.assertEqual(result, expected)
-        
+
     def test_blockquote(self):
 
         md = """> Blockquote 1 **bold**"""
         result = markdown_to_html_node(md).to_html()
         expected = "<div><blockquote>Blockquote 1 <b>bold</b></blockquote></div>"
         self.assertEqual(result, expected)
-        
+
         md = """> Blockquote 1
 > line 2 in blockquote
 
@@ -222,7 +222,7 @@ This is another paragraph with _italic_ text and `code` here
         result = markdown_to_html_node(md).to_html()
         expected = "<div><blockquote>Blockquote 1\nline 2 in blockquote</blockquote><blockquote>Blockquote 2</blockquote></div>"
         self.assertEqual(result, expected)
-    
+
     def test_codeblock(self):
         # From boot.dev
         md = """
@@ -231,11 +231,10 @@ This is another paragraph with _italic_ text and `code` here
     the **same** even with inline stuff
     ```
     """
-    
+
         node = markdown_to_html_node(md)
         html = node.to_html()
         self.assertEqual(
             html,
             "<div><pre><code>This is text that _should_ remain\nthe **same** even with inline stuff\n</code></pre></div>",
         )
-
