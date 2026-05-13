@@ -198,7 +198,7 @@ def create_code_block(block):
     # Doesn't perform inline changes unlike the others
     lines = block.split("\n")
     lines = lines[1:-1]
-    lines = [line.strip() for line in lines]
+    # lines = [line.strip() for line in lines]
     lines = [line for line in lines if len(line) > 0]
     reformed = "\n".join(lines)
     reformed = reformed + "\n"

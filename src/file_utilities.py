@@ -107,9 +107,58 @@ def clear_folder(folder):
             shutil.rmtree(full_path)
 
     
+def get_text_file(filepath):
+    # Returns text content if found.
+    # Raises an exception if not.
+
+    if not os.path.exists(filepath):
+        raise FileNotFoundError(f"Can't find:\n{filepath}")
+    
+    if not os.path.isfile(filepath):
+        raise ValueError(f"Not a file: \n{filepath}")
+        
+    with open(filepath, "r") as file:
+        content = file.read()
+    return content.strip()
+    
+def write_text_file(filepath, content):
+    # Writes to a file
+
+    parent = os.path.dirname(filepath)
+    
+    if not parent:
+        raise ValueError("parent directory does not exist")
+
+    if not os.path.exists(parent):
+        os.makedirs(parent, exist_ok=True)
+        
+    with open(filepath, "w", encoding="utf-8") as f:
+        f.write(content)
+
 
 if __name__ == "__main__":
-    print("In file_utilities\n")
-    print(f"Working directory:\n{os.getcwd()}\n")
-    print(f"copy_files: {copy_files("static", "public")}\n")
+    # print("In file_utilities\n")
+    # print(f"Working directory:\n{os.getcwd()}\n")
+    # print(f"copy_files: {copy_files("static", "public")}\n")
     # clear_folder("public")
+    result = get_text_file("template.html")
+    print(result)
+    expected = """<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ Title }}</title>
+    <link href="/index.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <article>{{ Content }}</article>
+  </body>
+</html>"""
+    print("----------")
+    i = 298
+    print(f"expected length = {len(expected)}")
+    print(f"result length = {len(result)}")
+    print(expected[:i])
+    print(result[:i] == expected[:i])

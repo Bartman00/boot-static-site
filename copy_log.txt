@@ -16,27 +16,6 @@ Copied from:
 Copied to:
 /home/bmatt/dev/static-site/boot-static-site/public/index.css
 
-Item: index.html:Zone.Identifier:
-Is a file.
-Copied from:
-/home/bmatt/dev/static-site/boot-static-site/static/index.html:Zone.Identifier
-Copied to:
-/home/bmatt/dev/static-site/boot-static-site/public/index.html:Zone.Identifier
-
-Item: styles.css:Zone.Identifier:
-Is a file.
-Copied from:
-/home/bmatt/dev/static-site/boot-static-site/static/styles.css:Zone.Identifier
-Copied to:
-/home/bmatt/dev/static-site/boot-static-site/public/styles.css:Zone.Identifier
-
-Item: index.html:
-Is a file.
-Copied from:
-/home/bmatt/dev/static-site/boot-static-site/static/index.html
-Copied to:
-/home/bmatt/dev/static-site/boot-static-site/public/index.html
-
 Item: images:
 Is a folder.
 -----Recursive call------
@@ -51,6 +30,34 @@ CWD:
 Found /home/bmatt/dev/static-site/boot-static-site/static/images source directory
 Found /home/bmatt/dev/static-site/boot-static-site/public/images destination directory
 
+Item: rivendell.png:
+Is a file.
+Copied from:
+/home/bmatt/dev/static-site/boot-static-site/static/images/rivendell.png
+Copied to:
+/home/bmatt/dev/static-site/boot-static-site/public/images/rivendell.png
+
+Item: rivendell.png:Zone.Identifier:
+Is a file.
+Copied from:
+/home/bmatt/dev/static-site/boot-static-site/static/images/rivendell.png:Zone.Identifier
+Copied to:
+/home/bmatt/dev/static-site/boot-static-site/public/images/rivendell.png:Zone.Identifier
+
+Item: tom.png:
+Is a file.
+Copied from:
+/home/bmatt/dev/static-site/boot-static-site/static/images/tom.png
+Copied to:
+/home/bmatt/dev/static-site/boot-static-site/public/images/tom.png
+
+Item: tom.png:Zone.Identifier:
+Is a file.
+Copied from:
+/home/bmatt/dev/static-site/boot-static-site/static/images/tom.png:Zone.Identifier
+Copied to:
+/home/bmatt/dev/static-site/boot-static-site/public/images/tom.png:Zone.Identifier
+
 Item: tolkien.png:Zone.Identifier:
 Is a file.
 Copied from:
@@ -58,12 +65,26 @@ Copied from:
 Copied to:
 /home/bmatt/dev/static-site/boot-static-site/public/images/tolkien.png:Zone.Identifier
 
+Item: glorfindel.png:Zone.Identifier:
+Is a file.
+Copied from:
+/home/bmatt/dev/static-site/boot-static-site/static/images/glorfindel.png:Zone.Identifier
+Copied to:
+/home/bmatt/dev/static-site/boot-static-site/public/images/glorfindel.png:Zone.Identifier
+
 Item: tolkien.png:
 Is a file.
 Copied from:
 /home/bmatt/dev/static-site/boot-static-site/static/images/tolkien.png
 Copied to:
 /home/bmatt/dev/static-site/boot-static-site/public/images/tolkien.png
+
+Item: glorfindel.png:
+Is a file.
+Copied from:
+/home/bmatt/dev/static-site/boot-static-site/static/images/glorfindel.png
+Copied to:
+/home/bmatt/dev/static-site/boot-static-site/public/images/glorfindel.png
 ------Returning Recursive Log------
 Copied folder from:
 /home/bmatt/dev/static-site/boot-static-site/static/images
