@@ -1,20 +1,20 @@
 Attempting to copy from
 static
 to
-public
+docs
 
 CWD:
 /home/bmatt/dev/static-site/boot-static-site
 
 Found /home/bmatt/dev/static-site/boot-static-site/static source directory
-Found /home/bmatt/dev/static-site/boot-static-site/public destination directory
+Found /home/bmatt/dev/static-site/boot-static-site/docs destination directory
 
 Item: index.css:
 Is a file.
 Copied from:
 /home/bmatt/dev/static-site/boot-static-site/static/index.css
 Copied to:
-/home/bmatt/dev/static-site/boot-static-site/public/index.css
+/home/bmatt/dev/static-site/boot-static-site/docs/index.css
 
 Item: images:
 Is a folder.
@@ -22,80 +22,80 @@ Is a folder.
 Attempting to copy from
 /home/bmatt/dev/static-site/boot-static-site/static/images
 to
-/home/bmatt/dev/static-site/boot-static-site/public/images
+/home/bmatt/dev/static-site/boot-static-site/docs/images
 
 CWD:
 /home/bmatt/dev/static-site/boot-static-site
 
 Found /home/bmatt/dev/static-site/boot-static-site/static/images source directory
-Found /home/bmatt/dev/static-site/boot-static-site/public/images destination directory
+Found /home/bmatt/dev/static-site/boot-static-site/docs/images destination directory
 
 Item: rivendell.png:
 Is a file.
 Copied from:
 /home/bmatt/dev/static-site/boot-static-site/static/images/rivendell.png
 Copied to:
-/home/bmatt/dev/static-site/boot-static-site/public/images/rivendell.png
+/home/bmatt/dev/static-site/boot-static-site/docs/images/rivendell.png
 
 Item: rivendell.png:Zone.Identifier:
 Is a file.
 Copied from:
 /home/bmatt/dev/static-site/boot-static-site/static/images/rivendell.png:Zone.Identifier
 Copied to:
-/home/bmatt/dev/static-site/boot-static-site/public/images/rivendell.png:Zone.Identifier
+/home/bmatt/dev/static-site/boot-static-site/docs/images/rivendell.png:Zone.Identifier
 
 Item: tom.png:
 Is a file.
 Copied from:
 /home/bmatt/dev/static-site/boot-static-site/static/images/tom.png
 Copied to:
-/home/bmatt/dev/static-site/boot-static-site/public/images/tom.png
+/home/bmatt/dev/static-site/boot-static-site/docs/images/tom.png
 
 Item: tom.png:Zone.Identifier:
 Is a file.
 Copied from:
 /home/bmatt/dev/static-site/boot-static-site/static/images/tom.png:Zone.Identifier
 Copied to:
-/home/bmatt/dev/static-site/boot-static-site/public/images/tom.png:Zone.Identifier
+/home/bmatt/dev/static-site/boot-static-site/docs/images/tom.png:Zone.Identifier
 
 Item: tolkien.png:Zone.Identifier:
 Is a file.
 Copied from:
 /home/bmatt/dev/static-site/boot-static-site/static/images/tolkien.png:Zone.Identifier
 Copied to:
-/home/bmatt/dev/static-site/boot-static-site/public/images/tolkien.png:Zone.Identifier
+/home/bmatt/dev/static-site/boot-static-site/docs/images/tolkien.png:Zone.Identifier
 
 Item: glorfindel.png:Zone.Identifier:
 Is a file.
 Copied from:
 /home/bmatt/dev/static-site/boot-static-site/static/images/glorfindel.png:Zone.Identifier
 Copied to:
-/home/bmatt/dev/static-site/boot-static-site/public/images/glorfindel.png:Zone.Identifier
+/home/bmatt/dev/static-site/boot-static-site/docs/images/glorfindel.png:Zone.Identifier
 
 Item: tolkien.png:
 Is a file.
 Copied from:
 /home/bmatt/dev/static-site/boot-static-site/static/images/tolkien.png
 Copied to:
-/home/bmatt/dev/static-site/boot-static-site/public/images/tolkien.png
+/home/bmatt/dev/static-site/boot-static-site/docs/images/tolkien.png
 
 Item: glorfindel.png:
 Is a file.
 Copied from:
 /home/bmatt/dev/static-site/boot-static-site/static/images/glorfindel.png
 Copied to:
-/home/bmatt/dev/static-site/boot-static-site/public/images/glorfindel.png
+/home/bmatt/dev/static-site/boot-static-site/docs/images/glorfindel.png
 ------Returning Recursive Log------
 Copied folder from:
 /home/bmatt/dev/static-site/boot-static-site/static/images
 To:
-/home/bmatt/dev/static-site/boot-static-site/public/images
+/home/bmatt/dev/static-site/boot-static-site/docs/images
 
 Item: styles.css:
 Is a file.
 Copied from:
 /home/bmatt/dev/static-site/boot-static-site/static/styles.css
 Copied to:
-/home/bmatt/dev/static-site/boot-static-site/public/styles.css
+/home/bmatt/dev/static-site/boot-static-site/docs/styles.css
 
 ------Saving log------

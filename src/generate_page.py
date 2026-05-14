@@ -25,7 +25,7 @@ def extract_title(md):
     
     return h1.group(1).strip()
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, basepath="/"):
     '''
     Driver to generate html page
     '''
@@ -78,6 +78,15 @@ def generate_page(from_path, template_path, dest_path):
         print("Error substituting text")
         print(e)
         return None
+        
+    # Substitute in the basepath
+    try:
+        new_content = new_content.replace('href="/', f'href="{basepath}')
+        new_content = new_content.replace('src="/', f'src="{basepath}')
+    except Exception as e:
+        print("Error adding basepath")
+        print(e)
+        return None
 
     # Write file at dest_path
     print("Write file")
@@ -91,7 +100,7 @@ def generate_page(from_path, template_path, dest_path):
     return new_content
     
     
-def generate_page_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_page_recursive(dir_path_content, template_path, dest_dir_path, basepath="/"):
     # Recursively generate all files starting with a seed
     
     cwd = os.getcwd()
@@ -111,14 +120,14 @@ def generate_page_recursive(dir_path_content, template_path, dest_dir_path):
 
         if os.path.isfile(from_path):
             # Copy
-            generate_page(from_path, template_path, to_path)
+            generate_page(from_path, template_path, to_path, basepath)
 
 
         elif os.path.isdir(from_path):
 
             recursion_successful = generate_page_recursive(from_path, 
                                             template_path,
-                                           to_path)
+                                           to_path, basepath)
             
             if not recursion_successful:
                 print("Error: recusive call failed.")

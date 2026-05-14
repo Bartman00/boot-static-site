@@ -1,22 +1,24 @@
 from file_utilities import clear_folder, copy_files
 from generate_page import generate_page_recursive
-from textnode import TextNode, TextType
+import sys
 
 
 def main():
-    test_node = TextNode(
-        "This is some anchor text", TextType.LINK, "https://www.boot.dev"
-    )
-    print(test_node)
+    if len(sys.argv) > 1:
+        # Includes a basepath
+        basepath = sys.argv[1]
+    else:
+        basepath = "/"
+    print(basepath)
 
     print("----- Clearing old files -----")
-    clear_folder("public")
+    clear_folder("docs")
 
     print("----- Copying static files -----")
-    copy_files("static", "public")
+    copy_files("static", "docs")
 
     print("----- Generating pages -----")
-    generate_page_recursive("content/", "template.html", "public/")
+    generate_page_recursive("content/", "template.html", "docs/", basepath)
 
 
 if __name__ == "__main__":
