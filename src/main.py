@@ -9,7 +9,7 @@ def main():
         basepath = sys.argv[1]
     else:
         basepath = "/"
-    print(basepath)
+    print(f"basepath: {basepath}")
 
     print("----- Clearing old files -----")
     clear_folder("docs")
